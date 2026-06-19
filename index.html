@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulador de Decisión — Sistema RAN</title>
+<title>Simulador de Decisión — Decide Fácil</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --bg: #0a0a0f;
     --surface: #111118;
@@ -35,7 +34,6 @@
     --radius: 12px;
     --radius-sm: 7px;
   }
-
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--bg);
@@ -45,30 +43,12 @@
     flex-direction: column;
     align-items: center;
   }
-
   .header {
     width: 100%;
     max-width: 760px;
     padding: 56px 32px 0;
     text-align: center;
   }
-
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gold);
-    background: var(--gold-dim);
-    border: 0.5px solid rgba(201,168,76,0.25);
-    border-radius: 20px;
-    padding: 5px 14px;
-    margin-bottom: 28px;
-  }
-
   h1 {
     font-family: 'DM Serif Display', serif;
     font-size: clamp(28px, 4vw, 42px);
@@ -78,12 +58,7 @@
     margin-bottom: 14px;
     letter-spacing: -0.02em;
   }
-
-  h1 em {
-    font-style: italic;
-    color: var(--gold);
-  }
-
+  h1 em { font-style: italic; color: var(--gold); }
   .subtitle {
     font-size: 15px;
     color: var(--text-secondary);
@@ -92,87 +67,38 @@
     margin: 0 auto 52px;
     font-weight: 300;
   }
-
   .container {
     width: 100%;
     max-width: 760px;
     padding: 0 24px 80px;
   }
-
   .step-indicator {
     display: flex;
     align-items: center;
     gap: 0;
     margin-bottom: 36px;
   }
-
   .step-dot {
-    width: 28px;
-    height: 28px;
+    width: 28px; height: 28px;
     border-radius: 50%;
     border: 1px solid var(--border-2);
     background: var(--surface);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 500;
     color: var(--text-tertiary);
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
     transition: all 0.3s ease;
     flex-shrink: 0;
   }
-
-  .step-dot.active {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: #0a0a0f;
-  }
-
-  .step-dot.done {
-    background: var(--surface-3);
-    border-color: var(--border-2);
-    color: var(--gold);
-  }
-
+  .step-dot.active { background: var(--gold); border-color: var(--gold); color: #0a0a0f; }
+  .step-dot.done { background: var(--surface-3); border-color: var(--border-2); color: var(--gold); }
   .step-line {
-    flex: 1;
-    height: 1px;
+    flex: 1; height: 1px;
     background: var(--border);
     transition: background 0.3s ease;
   }
-
   .step-line.done { background: rgba(201,168,76,0.3); }
-
-  .step-label {
-    font-size: 11px;
-    color: var(--text-tertiary);
-    text-align: center;
-    margin-top: 8px;
-    letter-spacing: 0.04em;
-  }
-
-  .step-wrapper {
-    position: relative;
-  }
-
-  .step-labels {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 36px;
-    margin-top: -28px;
-  }
-
-  .step-label-item {
-    font-size: 10px;
-    color: var(--text-tertiary);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-align: center;
-    width: 28px;
-  }
-
+  .step-wrapper { position: relative; }
   .card {
     background: var(--surface);
     border: 0.5px solid var(--border);
@@ -181,103 +107,43 @@
     margin-bottom: 16px;
     transition: all 0.4s ease;
   }
-
   .card.hidden { display: none; }
-
   .question-num {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 10px;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 10px;
   }
-
   .question-text {
     font-family: 'DM Serif Display', serif;
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 1.3;
-    color: var(--text);
-    margin-bottom: 8px;
+    font-size: 22px; font-weight: 400;
+    line-height: 1.3; color: var(--text); margin-bottom: 8px;
   }
-
   .question-sub {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 28px;
-    font-weight: 300;
+    font-size: 13px; color: var(--text-secondary);
+    line-height: 1.6; margin-bottom: 28px; font-weight: 300;
   }
-
-  .options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
+  .options { display: flex; flex-direction: column; gap: 10px; }
   .option {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
+    display: flex; align-items: flex-start; gap: 14px;
     padding: 14px 18px;
     border: 0.5px solid var(--border-2);
     border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background: transparent;
-    text-align: left;
+    cursor: pointer; transition: all 0.2s ease;
+    background: transparent; text-align: left;
   }
-
-  .option:hover {
-    border-color: rgba(201,168,76,0.3);
-    background: var(--gold-glow);
-  }
-
-  .option.selected {
-    border-color: var(--gold);
-    background: var(--gold-dim);
-  }
-
+  .option:hover { border-color: rgba(201,168,76,0.3); background: var(--gold-glow); }
+  .option.selected { border-color: var(--gold); background: var(--gold-dim); }
   .option-key {
-    width: 22px;
-    height: 22px;
-    border-radius: 5px;
-    border: 1px solid var(--border-2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text-tertiary);
-    flex-shrink: 0;
-    margin-top: 1px;
-    transition: all 0.2s;
+    width: 22px; height: 22px;
+    border-radius: 5px; border: 1px solid var(--border-2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 500; color: var(--text-tertiary);
+    flex-shrink: 0; margin-top: 1px; transition: all 0.2s;
   }
-
-  .option.selected .option-key {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: #0a0a0f;
-  }
-
+  .option.selected .option-key { background: var(--gold); border-color: var(--gold); color: #0a0a0f; }
   .option-content { flex: 1; }
-
-  .option-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 2px;
-    line-height: 1.4;
-  }
-
-  .option-desc {
-    font-size: 12px;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    font-weight: 300;
-  }
-
+  .option-label { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 2px; line-height: 1.4; }
+  .option-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; font-weight: 300; }
   .decision-input {
     width: 100%;
     background: var(--surface-2);
@@ -285,120 +151,29 @@
     border-radius: var(--radius-sm);
     padding: 14px 18px;
     font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    color: var(--text);
-    resize: none;
-    min-height: 100px;
-    transition: border-color 0.2s;
-    outline: none;
+    font-size: 15px; color: var(--text);
+    resize: none; min-height: 100px;
+    transition: border-color 0.2s; outline: none;
   }
-
   .decision-input::placeholder { color: var(--text-tertiary); }
   .decision-input:focus { border-color: rgba(201,168,76,0.4); }
-
   .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 13px 28px;
-    border-radius: var(--radius-sm);
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 28px; border-radius: var(--radius-sm);
     font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: none;
-    letter-spacing: 0.02em;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s ease;
+    border: none; letter-spacing: 0.02em;
   }
-
-  .btn-primary {
-    background: var(--gold);
-    color: #0a0a0f;
-  }
-
+  .btn-primary { background: var(--gold); color: #0a0a0f; }
   .btn-primary:hover { background: #d4b055; transform: translateY(-1px); }
   .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-
   .btn-ghost {
-    background: transparent;
-    color: var(--text-secondary);
+    background: transparent; color: var(--text-secondary);
     border: 0.5px solid var(--border-2);
   }
-
   .btn-ghost:hover { background: var(--surface-2); color: var(--text); }
-
-  .btn-row {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 24px;
-  }
-
-  .scale-slider {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .slider-track {
-    position: relative;
-    width: 100%;
-  }
-
-  input[type="range"] {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 4px;
-    background: var(--surface-3);
-    border-radius: 2px;
-    outline: none;
-    cursor: pointer;
-  }
-
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: var(--gold);
-    cursor: pointer;
-    border: 3px solid var(--bg);
-    box-shadow: 0 0 0 1px var(--gold);
-  }
-
-  .scale-labels {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 8px;
-  }
-
-  .scale-label {
-    font-size: 11px;
-    color: var(--text-tertiary);
-    text-align: center;
-  }
-
-  .scale-value-display {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .scale-number {
-    font-family: 'DM Serif Display', serif;
-    font-size: 40px;
-    color: var(--gold);
-    min-width: 48px;
-    line-height: 1;
-  }
-
-  .scale-descriptor {
-    font-size: 14px;
-    color: var(--text-secondary);
-    font-weight: 300;
-    line-height: 1.4;
-  }
-
+  .btn-row { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; }
   .result-card {
     background: var(--surface);
     border: 1px solid var(--border-2);
@@ -406,244 +181,87 @@
     overflow: hidden;
     animation: fadeUp 0.5s ease;
   }
-
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
   .result-header {
     padding: 36px 32px 28px;
     border-bottom: 0.5px solid var(--border);
-    position: relative;
-    overflow: hidden;
+    position: relative; overflow: hidden;
   }
-
-  .result-header::before {
-    content: '';
-    position: absolute;
-    top: -40px;
-    right: -40px;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    opacity: 0.06;
-    background: currentColor;
-  }
-
   .result-verdict {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border-radius: 20px;
-    padding: 5px 14px;
-    margin-bottom: 20px;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    border-radius: 20px; padding: 5px 14px; margin-bottom: 20px;
     border: 0.5px solid currentColor;
   }
-
-  .result-verdict.go {
-    color: var(--teal);
-    background: var(--teal-dim);
-    border-color: rgba(29,158,117,0.3);
-  }
-
-  .result-verdict.caution {
-    color: var(--amber);
-    background: var(--amber-dim);
-    border-color: rgba(239,159,39,0.3);
-  }
-
-  .result-verdict.stop {
-    color: var(--red);
-    background: var(--red-dim);
-    border-color: rgba(226,75,74,0.3);
-  }
-
-  .result-verdict.optimal {
-    color: var(--gold);
-    background: var(--gold-dim);
-    border-color: rgba(201,168,76,0.3);
-  }
-
+  .result-verdict.go { color: var(--teal); background: var(--teal-dim); border-color: rgba(29,158,117,0.3); }
+  .result-verdict.caution { color: var(--amber); background: var(--amber-dim); border-color: rgba(239,159,39,0.3); }
+  .result-verdict.stop { color: var(--red); background: var(--red-dim); border-color: rgba(226,75,74,0.3); }
+  .result-verdict.optimal { color: var(--gold); background: var(--gold-dim); border-color: rgba(201,168,76,0.3); }
   .result-title {
     font-family: 'DM Serif Display', serif;
-    font-size: 26px;
-    font-weight: 400;
-    line-height: 1.25;
-    margin-bottom: 10px;
-    color: var(--text);
+    font-size: 26px; font-weight: 400;
+    line-height: 1.25; margin-bottom: 10px; color: var(--text);
   }
-
   .result-summary {
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.65;
-    font-weight: 300;
-    max-width: 540px;
+    font-size: 14px; color: var(--text-secondary);
+    line-height: 1.65; font-weight: 300; max-width: 540px;
   }
-
   .result-body {
     padding: 28px 32px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
   }
-
   .result-block {
     background: var(--surface-2);
     border: 0.5px solid var(--border);
     border-radius: var(--radius-sm);
     padding: 18px 20px;
   }
-
   .result-block-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-tertiary);
-    margin-bottom: 8px;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-tertiary); margin-bottom: 8px;
   }
-
-  .result-block-content {
-    font-size: 14px;
-    color: var(--text);
-    line-height: 1.55;
-    font-weight: 300;
-  }
-
+  .result-block-content { font-size: 14px; color: var(--text); line-height: 1.55; font-weight: 300; }
   .result-block.full { grid-column: 1 / -1; }
-
-  .protocol-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
+  .protocol-steps { display: flex; flex-direction: column; gap: 10px; }
   .protocol-step {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
+    display: flex; align-items: flex-start; gap: 12px;
     padding: 12px 14px;
-    background: var(--surface-3);
-    border-radius: 6px;
+    background: var(--surface-3); border-radius: 6px;
   }
-
   .protocol-step-num {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--gold);
-    color: #0a0a0f;
-    font-size: 10px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 1px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--gold); color: #0a0a0f;
+    font-size: 10px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
   }
-
-  .protocol-step-text {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    font-weight: 300;
-  }
-
+  .protocol-step-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; font-weight: 300; }
   .result-footer {
     padding: 20px 32px 28px;
-    display: flex;
-    gap: 12px;
+    display: flex; gap: 12px;
     border-top: 0.5px solid var(--border);
   }
-
-  .state-meter {
-    display: flex;
-    gap: 4px;
-    margin-bottom: 20px;
-  }
-
-  .state-bar {
-    flex: 1;
-    height: 3px;
-    border-radius: 2px;
-    background: var(--surface-3);
-    transition: background 0.4s ease;
-  }
-
+  .state-meter { display: flex; gap: 4px; margin-bottom: 20px; }
+  .state-bar { flex: 1; height: 3px; border-radius: 2px; background: var(--surface-3); transition: background 0.4s ease; }
   .progress-ring {
-    position: relative;
-    width: 100%;
-    height: 4px;
-    background: var(--surface-3);
-    border-radius: 2px;
-    overflow: hidden;
-    margin-bottom: 4px;
+    position: relative; width: 100%; height: 4px;
+    background: var(--surface-3); border-radius: 2px; overflow: hidden; margin-bottom: 4px;
   }
-
-  .progress-fill {
-    height: 100%;
-    border-radius: 2px;
-    background: var(--gold);
-    transition: width 0.6s ease;
-  }
-
+  .progress-fill { height: 100%; border-radius: 2px; background: var(--gold); transition: width 0.6s ease; }
   .tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    font-weight: 500;
-    padding: 4px 10px;
-    border-radius: 20px;
-    background: var(--surface-3);
-    color: var(--text-secondary);
-    border: 0.5px solid var(--border-2);
-    margin-right: 6px;
-    margin-bottom: 6px;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 500; padding: 4px 10px;
+    border-radius: 20px; background: var(--surface-3); color: var(--text-secondary);
+    border: 0.5px solid var(--border-2); margin-right: 6px; margin-bottom: 6px;
   }
-
-  .divider {
-    height: 0.5px;
-    background: var(--border);
-    margin: 24px 0;
-  }
-
-  .risk-score {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 6px;
-  }
-
-  .risk-number {
-    font-family: 'DM Serif Display', serif;
-    font-size: 52px;
-    line-height: 1;
-  }
-
-  .risk-label {
-    font-size: 13px;
-    color: var(--text-secondary);
-    font-weight: 300;
-  }
-
-  .watermark {
-    text-align: center;
-    font-size: 11px;
-    color: var(--text-tertiary);
-    padding: 24px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .watermark span { color: var(--gold); opacity: 0.6; }
-
+  .risk-score { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+  .risk-number { font-family: 'DM Serif Display', serif; font-size: 52px; line-height: 1; }
+  .risk-label { font-size: 13px; color: var(--text-secondary); font-weight: 300; }
   @media (max-width: 600px) {
     .result-body { grid-template-columns: 1fr; }
     .result-block.full { grid-column: 1; }
@@ -657,14 +275,11 @@
 <body>
 
 <div class="header">
-  <div class="badge">Sistema RAN · Módulo IV</div>
   <h1>Simulador de <em>Decisión</em> Ejecutiva</h1>
   <p class="subtitle">Antes de decidir, diagnosticá tu estado cognitivo real. Este sistema analiza tu condición actual y te dice si estás listo para proceder — o qué hacer primero.</p>
 </div>
 
 <div class="container">
-
-  <!-- Step Indicator -->
   <div class="step-wrapper">
     <div class="step-indicator" id="stepIndicator">
       <div class="step-dot active" id="dot-0">1</div>
@@ -679,7 +294,7 @@
     </div>
   </div>
 
-  <!-- Step 0: Decisión -->
+  <!-- Step 0 -->
   <div class="card" id="step-0">
     <div class="question-num">Paso 01 de 05</div>
     <div class="question-text">¿Qué decisión estás a punto de tomar?</div>
@@ -716,7 +331,7 @@
     </div>
   </div>
 
-  <!-- Step 1: Horas activo -->
+  <!-- Step 1 -->
   <div class="card hidden" id="step-1">
     <div class="question-num">Paso 02 de 05</div>
     <div class="question-text">¿Cuántas horas llevás activo sin recuperación real?</div>
@@ -757,7 +372,7 @@
     </div>
   </div>
 
-  <!-- Step 2: Último input -->
+  <!-- Step 2 -->
   <div class="card hidden" id="step-2">
     <div class="question-num">Paso 03 de 05</div>
     <div class="question-text">¿Cuál fue tu último input de alta carga cognitiva?</div>
@@ -798,7 +413,7 @@
     </div>
   </div>
 
-  <!-- Step 3: Estado subjetivo -->
+  <!-- Step 3 -->
   <div class="card hidden" id="step-3">
     <div class="question-num">Paso 04 de 05</div>
     <div class="question-text">¿Desde dónde sentís que estás decidiendo ahora mismo?</div>
@@ -839,11 +454,11 @@
     </div>
   </div>
 
-  <!-- Step 4: Urgencia -->
+  <!-- Step 4 -->
   <div class="card hidden" id="step-4">
     <div class="question-num">Paso 05 de 05</div>
     <div class="question-text">¿Qué tan urgente es esta decisión realmente?</div>
-    <div class="question-sub">Distinguir urgencia real de urgencia percibida es uno de los ejercicios más difíciles — y más importantes — del liderazgo ejecutivo.</div>
+    <div class="question-sub">Distinguir urgencia real de urgencia percibida es uno de los ejercicios más difíciles — y más importantes — del proceso decisional.</div>
     <div class="options" id="urgencyOptions">
       <div class="option" data-value="0" onclick="selectOption('urgency', this)">
         <div class="option-key">A</div>
@@ -856,7 +471,7 @@
         <div class="option-key">B</div>
         <div class="option-content">
           <div class="option-label">Debo decidir en las próximas 2 horas</div>
-          <div class="option-desc">Margen acotado pero real. Protocolo RAN express antes de decidir.</div>
+          <div class="option-desc">Margen acotado pero real. Tomá unos minutos para despejar el sistema antes de decidir.</div>
         </div>
       </div>
       <div class="option" data-value="2" onclick="selectOption('urgency', this)">
@@ -870,7 +485,7 @@
         <div class="option-key">D</div>
         <div class="option-content">
           <div class="option-label">Decisión crítica e inaplazable. Debo actuar ahora</div>
-          <div class="option-desc">Urgencia real verificada. El sistema entregará el protocolo de emergencia.</div>
+          <div class="option-desc">Urgencia real verificada. El sistema entregará el protocolo de acción inmediata.</div>
         </div>
       </div>
     </div>
@@ -880,21 +495,12 @@
     </div>
   </div>
 
-  <!-- Result -->
   <div id="result" style="display:none; animation: fadeUp 0.5s ease;"></div>
 
-  <div class="watermark">Sistema RAN · <span>Cognitive Optimization Method®</span> · Módulo IV</div>
 </div>
 
 <script>
-  const answers = {
-    impact: null,
-    hours: null,
-    lastInput: null,
-    state: null,
-    urgency: null
-  };
-
+  const answers = { impact: null, hours: null, lastInput: null, state: null, urgency: null };
   const decisionText = document.getElementById('decisionText');
   decisionText.addEventListener('input', checkStep0);
 
@@ -909,15 +515,10 @@
     parent.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
     answers[key] = parseInt(el.dataset.value);
-
     const stepMap = { impact: 0, hours: 1, lastInput: 2, state: 3, urgency: 4 };
     const step = stepMap[key];
-
-    if (key === 'impact') {
-      checkStep0();
-    } else {
-      document.getElementById(`btn-${step}`).disabled = false;
-    }
+    if (key === 'impact') { checkStep0(); }
+    else { document.getElementById(`btn-${step}`).disabled = false; }
   }
 
   function updateStepIndicator(current) {
@@ -929,8 +530,7 @@
       else { dot.innerHTML = i + 1; }
     }
     for (let i = 0; i <= 3; i++) {
-      const line = document.getElementById(`line-${i}`);
-      line.className = i < current ? 'step-line done' : 'step-line';
+      document.getElementById(`line-${i}`).className = i < current ? 'step-line done' : 'step-line';
     }
   }
 
@@ -947,42 +547,30 @@
     updateStepIndicator(n);
   }
 
-  const stateDescriptors = ['Saturación', 'Fatiga', 'Operativo', 'Claridad'];
-  const sliderDescriptions = [
-    'Sistema colapsado. El residuo cognitivo supera la capacidad de procesamiento.',
-    'Degradación activa. El análisis profundo está comprometido.',
-    'Capacidad presente. El sistema puede sostener decisiones tácticas.',
-    'Ventana de precisión activa. Estado óptimo para decisiones estratégicas.'
-  ];
-
   function computeScore() {
     const { impact, hours, lastInput, state, urgency } = answers;
-    // Score 0-100, higher = more ready to decide
-    let stateScore = (state / 3) * 40; // state is most important (40pts)
-    let hoursScore = ((3 - hours) / 3) * 25; // hours (25pts)
-    let inputScore = ((3 - lastInput) / 3) * 20; // last input (20pts)
-    let urgencyBonus = urgency === 3 ? 15 : 0; // urgency override (15pts)
+    let stateScore = (state / 3) * 40;
+    let hoursScore = ((3 - hours) / 3) * 25;
+    let inputScore = ((3 - lastInput) / 3) * 20;
+    let urgencyBonus = urgency === 3 ? 15 : 0;
     return Math.round(stateScore + hoursScore + inputScore + urgencyBonus);
   }
 
   function getVerdict(score, impact, urgency, state) {
     if (urgency === 3) {
       return {
-        type: 'caution',
-        label: 'Decisión de emergencia',
+        type: 'caution', label: 'Decisión de emergencia',
         title: 'El contexto exige actuar. Aplicá el protocolo mínimo.',
         summary: 'La urgencia real no deja margen de restauración completa. Aun así, 60 segundos de desenganche focal antes de ejecutar puede reducir significativamente el riesgo de sesgo reactivo.',
         protocol: [
-          '60 segundos de respiración 4-2-6 antes de cualquier acción',
+          '60 segundos de respiración profunda antes de cualquier acción',
           'Externalizá el problema en una frase de no más de 20 palabras',
           'Identificá el único criterio que más importa para esta decisión',
           'Decidí. Documentá el razonamiento inmediatamente después.'
         ],
-        window: 'Acción inmediata con protocolo mínimo',
-        risk: 'Moderado-Alto'
+        window: 'Acción inmediata con protocolo mínimo', risk: 'Moderado-Alto'
       };
     }
-
     if (score >= 70) {
       return {
         type: impact >= 3 ? 'optimal' : 'go',
@@ -990,7 +578,7 @@
         title: impact >= 3 ? 'Tu ventana de decisión estratégica está abierta.' : 'Condiciones favorables para decidir.',
         summary: impact >= 3
           ? 'El diagnóstico confirma que estás en uno de los estados cognitivos más favorables para este tipo de decisión. Esta ventana es limitada — úsala.'
-          : 'Tu estado actual es compatible con la complejidad de esta decisión. El sistema está funcionando dentro de parámetros ejecutivos normales.',
+          : 'Tu estado actual es compatible con la complejidad de esta decisión. El sistema está funcionando dentro de parámetros normales.',
         protocol: [
           'No pospongas la decisión: estás en tu ventana de precisión',
           'Revisá los criterios clave una vez con mente fría',
@@ -1001,76 +589,60 @@
         risk: impact >= 3 ? 'Bajo (estado óptimo)' : 'Bajo'
       };
     }
-
     if (score >= 45) {
       return {
-        type: 'caution',
-        label: 'Precaución ejecutiva',
+        type: 'caution', label: 'Precaución ejecutiva',
         title: 'Tu sistema está operativo, pero no en su mejor versión.',
         summary: 'Podés decidir cuestiones tácticas sin riesgo significativo. Para decisiones estratégicas, 20 minutos de restauración cambiarán la calidad del output cognitivo de forma medible.',
         protocol: [
           '20 minutos de recuperación: sin pantallas, sin inputs nuevos',
-          'Aplicá el protocolo RAN completo (R-A-N)',
+          'Respiración lenta: 4 tiempos adentro, 2 pausa, 6 afuera. Tres ciclos.',
           'Revisá la decisión con el sistema restaurado',
           impact >= 3 ? 'Para este nivel de impacto, la restauración no es opcional' : 'Decidí solo cuando el sistema vuelva a estado operativo claro'
         ],
-        window: '20-40 minutos después de restauración RAN',
+        window: '20-40 minutos después de restauración',
         risk: impact >= 3 ? 'Alto sin restauración' : 'Moderado'
       };
     }
-
     return {
-      type: 'stop',
-      label: 'Alto cognitivo',
+      type: 'stop', label: 'Alto cognitivo',
       title: 'No estás en condiciones de tomar esta decisión ahora.',
-      summary: 'El diagnóstico es claro: el estado actual comprometería la calidad de cualquier decisión importante. Esto no es debilidad — es inteligencia sobre el sistema. Los ejecutivos de alto rendimiento saben cuándo no decidir.',
+      summary: 'El diagnóstico es claro: el estado actual comprometería la calidad de cualquier decisión importante. Esto no es debilidad — es inteligencia sobre el sistema. Las personas que deciden bien saben cuándo no decidir.',
       protocol: [
-        'Aplicá el protocolo RAN completo ahora — no después',
         'Mínimo 20 minutos de desconexión total: sin dispositivos',
-        'Si la urgencia lo permite: una pausa de sueño corta (20 min) resetea el sistema de forma superior a cualquier otra intervención',
-        'Retomá la evaluación de esta decisión solo cuando el autoreporte sea ≥ "Operativo"'
+        'Respiración 4-2-6: inhalá 4, pausá 2, exhalá 6. Repetí 5 ciclos.',
+        'Si la urgencia lo permite: una pausa de sueño corta (20 min) resetea el sistema mejor que cualquier otra intervención',
+        'Retomá la evaluación solo cuando tu autoreporte sea ≥ "Operativo"'
       ],
-      window: impact >= 3 ? 'Mínimo 2 horas de recuperación real' : 'Después de protocolo RAN + recuperación',
+      window: impact >= 3 ? 'Mínimo 2 horas de recuperación real' : 'Después de restauración completa',
       risk: 'Muy Alto sin intervención'
     };
   }
 
   function showResult() {
-    // hide all steps
     for (let i = 0; i <= 4; i++) document.getElementById(`step-${i}`).classList.add('hidden');
     document.getElementById('result').style.display = 'block';
-
-    // Update all dots to done
     for (let i = 0; i <= 4; i++) {
       const dot = document.getElementById(`dot-${i}`);
-      dot.className = 'step-dot done';
-      dot.innerHTML = '✓';
+      dot.className = 'step-dot done'; dot.innerHTML = '✓';
     }
-    for (let i = 0; i <= 3; i++) {
-      document.getElementById(`line-${i}`).className = 'step-line done';
-    }
+    for (let i = 0; i <= 3; i++) document.getElementById(`line-${i}`).className = 'step-line done';
 
     const score = computeScore();
     const verdict = getVerdict(score, answers.impact, answers.urgency, answers.state);
-
     const impactLabels = ['Operativo', 'Táctico', 'Estratégico'];
-    const impactColors = ['#378add', '#ef9f27', '#e24b4a'];
     const hoursLabels = ['< 2 horas', '2–4 horas', '4–6 horas', '> 6 horas'];
     const stateLabels = ['Saturación', 'Fatiga', 'Operativo', 'Claridad'];
-
     const stateColor = ['#e24b4a', '#ef9f27', '#378add', '#1d9e75'];
     const currentStateColor = stateColor[answers.state];
 
     document.getElementById('result').innerHTML = `
       <div class="result-card">
         <div class="result-header">
-          <div class="result-verdict ${verdict.type}">
-            ${verdict.label}
-          </div>
+          <div class="result-verdict ${verdict.type}">${verdict.label}</div>
           <div class="result-title">${verdict.title}</div>
           <p class="result-summary">${verdict.summary}</p>
         </div>
-
         <div class="result-body">
           <div class="result-block">
             <div class="result-block-label">Puntuación de estado</div>
@@ -1083,7 +655,6 @@
             </div>
             <div style="font-size: 11px; color: var(--text-tertiary); margin-top: 4px;">Capacidad de decisión actual</div>
           </div>
-
           <div class="result-block">
             <div class="result-block-label">Ventana recomendada</div>
             <div class="result-block-content" style="font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 8px;">${verdict.window}</div>
@@ -1092,7 +663,6 @@
               <span class="tag" style="color: ${currentStateColor}; border-color: ${currentStateColor}40;">${stateLabels[answers.state]}</span>
             </div>
           </div>
-
           <div class="result-block full">
             <div class="result-block-label">Protocolo a ejecutar</div>
             <div class="protocol-steps">
@@ -1100,11 +670,9 @@
                 <div class="protocol-step">
                   <div class="protocol-step-num">${i + 1}</div>
                   <div class="protocol-step-text">${s}</div>
-                </div>
-              `).join('')}
+                </div>`).join('')}
             </div>
           </div>
-
           <div class="result-block">
             <div class="result-block-label">Estado cognitivo detectado</div>
             <div class="state-meter">
@@ -1117,59 +685,37 @@
               Autoreporte: <strong style="color: ${currentStateColor}; font-weight: 500;">${stateLabels[answers.state]}</strong>
             </div>
           </div>
-
           <div class="result-block">
             <div class="result-block-label">Riesgo de sesgo</div>
             <div class="result-block-content" style="font-size: 15px; font-weight: 500; margin-bottom: 8px; color: ${score >= 70 ? '#1d9e75' : score >= 45 ? '#ef9f27' : '#e24b4a'}">${verdict.risk}</div>
             <div style="font-size: 12px; color: var(--text-tertiary); font-weight: 300; line-height: 1.5;">
-              ${answers.impact >= 3
-                ? 'Decisión estratégica: el costo de un error en este estado es alto.'
-                : 'Nivel de impacto acotado. El margen de error es mayor.'}
+              ${answers.impact >= 3 ? 'Decisión estratégica: el costo de un error en este estado es alto.' : 'Nivel de impacto acotado. El margen de error es mayor.'}
             </div>
           </div>
         </div>
-
         <div class="result-footer">
           <button class="btn btn-ghost" onclick="resetSimulator()">← Nueva decisión</button>
-          <button class="btn btn-primary" onclick="openProtocol()">Ver protocolo RAN completo →</button>
         </div>
       </div>
     `;
-
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function resetSimulator() {
-    answers.impact = null;
-    answers.hours = null;
-    answers.lastInput = null;
-    answers.state = null;
-    answers.urgency = null;
-
+    answers.impact = null; answers.hours = null;
+    answers.lastInput = null; answers.state = null; answers.urgency = null;
     document.getElementById('decisionText').value = '';
     document.getElementById('result').style.display = 'none';
     document.getElementById('result').innerHTML = '';
-
-    ['impact', 'hours', 'lastInput', 'state', 'urgency'].forEach(key => {
-      const id = { impact: 'impactOptions', hours: 'hoursOptions', lastInput: 'inputOptions', state: 'stateOptions', urgency: 'urgencyOptions' }[key];
-      if (document.getElementById(id)) {
+    ['impactOptions','hoursOptions','inputOptions','stateOptions','urgencyOptions'].forEach(id => {
+      if (document.getElementById(id))
         document.getElementById(id).querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-      }
     });
-
-    [0,1,2,3,4].forEach(i => {
-      const btn = document.getElementById(`btn-${i}`);
-      if (btn) btn.disabled = true;
-    });
-
+    [0,1,2,3,4].forEach(i => { const btn = document.getElementById(`btn-${i}`); if (btn) btn.disabled = true; });
     document.getElementById('step-0').classList.remove('hidden');
     [1,2,3,4].forEach(i => document.getElementById(`step-${i}`).classList.add('hidden'));
     updateStepIndicator(0);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function openProtocol() {
-    alert('Referí al Módulo IV del curso para el protocolo RAN completo.');
   }
 </script>
 </body>
